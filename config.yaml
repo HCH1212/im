@@ -1,0 +1,28 @@
+system:
+  host: "0.0.0.0"
+  port: ":8080"
+  env: release
+mysql:
+  host: 127.0.0.1
+  port: ":3306"
+  db: im
+  user: root
+  password: 041212
+  config: "charset=utf8mb4&parseTime=True&loc=Local"
+  log_level: dev
+logger:
+  level: info
+  prefix: '[blog]'
+  director: log
+  show_line: true
+  log_in_console: true
+redis:
+  host: 127.0.0.1
+  port: ":6379"
+  password: ""
+  db: 0
+  pool_size: 10
+  mini_dle_conns: 10
+jwt:
+  access_key: "i love you"
+  refresh_key: "forever"
