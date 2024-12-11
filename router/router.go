@@ -1,26 +1,25 @@
 package router
 
 import (
-	"context"
-	"im/global"
-
-	"github.com/cloudwego/hertz/pkg/app"
-	"github.com/cloudwego/hertz/pkg/app/server"
-	"github.com/cloudwego/hertz/pkg/common/utils"
-	"github.com/cloudwego/hertz/pkg/protocol/consts"
+	"github.com/gin-gonic/gin"
+	"im/api"
+	"im/service"
 )
 
-func InitRouter() {
-	h := server.Default(server.WithHostPorts(global.Config.System.Port))
+func NewRouter() *gin.Engine {
+	r := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
 
-	// 用户组
-	userRouter := h.Group("/user")
+	v1 := r.Group("/")
 	{
-		userRouter.POST("")
+		v1.GET("/ping", func(c *gin.Context) {
+			c.JSON(200, "pong")
+		})
+
+		v1.POST("/user/register", api.UserRegister)
+
+		v1.GET("/ws", service.Handler)
 	}
 
-	h.GET("/ping", func(ctx context.Context, c *app.RequestContext) {
-		c.JSON(consts.StatusOK, utils.H{"message": "pong"})
-	})
-	h.Spin()
+	return r
 }
